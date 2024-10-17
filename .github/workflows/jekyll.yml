@@ -27,7 +27,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'  # Adjust if you have a different Ruby version in your project
+          ruby-version: '3.2'  # Adjust if you have a different Ruby version in your project
           bundler-cache: true  # Caches gems to speed up builds
 
       - name: Setup Pages
