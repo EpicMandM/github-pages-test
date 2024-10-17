@@ -31,6 +31,17 @@ In your site's `_config.yml`, enable search:
 # Supports true (default) or false
 search_enabled: true
 ```
+### Test
+
+---
+layout: none
+---
+[{% for chart in site.data.bar-chart %}
+  {
+    "letter": "{{ chart.year }}",
+    "frequency": "{{ chart.frequency }}"
+  }{% if forloop.last == false %},{% endif %}
+{% endfor %}]
 
 ### Search granularity
 
