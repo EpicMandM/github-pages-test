@@ -1,0 +1,46 @@
+name: GitHub Pages
+
+on:
+  # Trigger the workflow on push to the default branch
+  push:
+    branches: ['main']  # Replace 'main' with your default branch if different
+  # Allows you to run the workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'  # Specify your Ruby version
+
+      - name: Install dependencies
+        run: |
+          bundle install
+
+      - name: Build Jekyll site
+        run: |
+          bundle exec jekyll build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./_site
+
+  # Deployment job
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
